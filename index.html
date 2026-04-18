@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singapore Real Estate | シンガポール不動産・住宅ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:#080808;
+  color:#E8E4DC;
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  line-height:1.7;
+}
+:root{
+  --gold:#C9943A;
+  --gold-dim:rgba(201,148,58,.15);
+  --ink:#080808;
+  --paper:#E8E4DC;
+  --mid:rgba(232,228,220,.5);
+  --dim:rgba(232,228,220,.25);
+  --line:rgba(232,228,220,.08);
+  --pad-x:clamp(20px,5vw,72px);
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+
+/* ═══════════════════════════════════════
+   NOISE GRAIN OVERLAY
+═══════════════════════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:1;
+}
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal.d1{transition-delay:.1s;}
+.reveal.d2{transition-delay:.22s;}
+.reveal.d3{transition-delay:.34s;}
+.reveal.d4{transition-delay:.46s;}
+.reveal-l{opacity:0;transform:translateX(-40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-l.in{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-r.in{opacity:1;transform:translateX(0);}
+
+/* ═══════════════════════════════════════
+   VERTICAL SIDE NAV (desktop)
+═══════════════════════════════════════ */
+#sidenav{
+  position:fixed;right:28px;top:50%;transform:translateY(-50%);
+  z-index:300;
+  display:flex;flex-direction:column;align-items:flex-end;gap:14px;
+}
+.sn-item{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  padding:4px 0;
+}
+.sn-dot{
+  width:5px;height:5px;border-radius:50%;
+  border:1px solid var(--dim);
+  background:transparent;
+  transition:background .3s,border-color .3s,transform .3s;
+}
+.sn-item.active .sn-dot{background:var(--gold);border-color:var(--gold);transform:scale(1.4);}
+.sn-label{
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dim);opacity:0;transform:translateX(8px);
+  transition:opacity .3s,transform .3s,color .3s;
+  white-space:nowrap;
+}
+.sn-item:hover .sn-label,.sn-item.active .sn-label{opacity:1;transform:translateX(0);color:var(--gold);}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+#hdr{
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  padding:22px var(--pad-x);
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background .5s;
+}
+#hdr.scrolled{background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(15px,2vw,19px);font-weight:300;
+  letter-spacing:4px;color:var(--paper);
+}
+.logo b{font-weight:600;color:var(--gold);}
+#hmbg{
+  display:none;background:none;border:none;
+  color:var(--paper);font-size:22px;cursor:pointer;
+  z-index:401;
+}
+
+/* Mobile menu */
+#mobmenu{
+  position:fixed;inset:0;background:#080808;z-index:399;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  transform:translateX(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+#mobmenu.open{transform:translateX(0);}
+.mob-lnk{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,7vw,48px);font-weight:300;
+  letter-spacing:2px;color:var(--mid);
+  cursor:pointer;transition:color .25s;
+}
+.mob-lnk:hover{color:var(--gold);}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+#s0{
+  position:relative;height:100svh;min-height:600px;
+  display:flex;align-items:flex-end;overflow:hidden;
+}
+#hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1800&q=85') center 35%/cover no-repeat;
+  transform:scale(1.06);transition:transform 10s ease;
+  filter:brightness(.4);
+}
+#hero-bg.rdy{transform:scale(1);}
+.hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(175deg,transparent 30%,rgba(8,8,8,.7) 65%,#080808 100%);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  padding:0 var(--pad-x) clamp(56px,8vh,100px);
+  width:100%;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:10px;letter-spacing:6px;color:rgba(201,148,58,.8);
+  text-transform:uppercase;margin-bottom:20px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:rgba(201,148,58,.5);}
+h1.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,10vw,130px);
+  font-weight:300;line-height:.95;
+  color:var(--paper);letter-spacing:-2px;
+  margin-bottom:8px;
+}
+h1.hero-title em{font-style:italic;color:var(--gold);}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(15px,2.5vw,24px);font-weight:300;
+  color:var(--mid);letter-spacing:5px;text-transform:uppercase;
+  margin-bottom:36px;
+}
+.hero-stats{
+  display:flex;gap:clamp(24px,4vw,56px);flex-wrap:wrap;
+  margin-bottom:clamp(32px,5vh,56px);
+}
+.hstat{border-top:1px solid var(--line);padding-top:14px;min-width:100px;}
+.hstat-v{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,4vw,42px);font-weight:600;
+  color:var(--gold);line-height:1;
+}
+.hstat-l{font-size:10px;letter-spacing:2px;color:var(--dim);margin-top:5px;text-transform:uppercase;}
+.hero-scroll{
+  display:flex;align-items:center;gap:12px;
+  font-size:9px;letter-spacing:4px;color:var(--dim);text-transform:uppercase;
+}
+.scroll-line{width:48px;height:1px;background:var(--line);overflow:hidden;position:relative;}
+.scroll-line::after{
+  content:'';position:absolute;left:-100%;top:0;
+  width:100%;height:100%;background:var(--gold);
+  animation:sl 2s ease infinite;
+}
+@keyframes sl{0%{left:-100%}100%{left:100%}}
+
+/* ═══════════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════════ */
+section{position:relative;z-index:1;}
+.sec-pad{padding:clamp(80px,12vh,140px) var(--pad-x);}
+.sec-alt{padding:clamp(80px,12vh,140px) var(--pad-x);background:rgba(255,255,255,.025);}
+.sec-dark{padding:clamp(80px,12vh,140px) var(--pad-x);background:#0d0d0d;}
+.inner{max-width:980px;margin:0 auto;}
+.inner-w{max-width:1140px;margin:0 auto;}
+
+/* Chapter label */
+.ch-label{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
+.ch-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,5vw,60px);font-weight:300;
+  color:var(--paper);line-height:1.15;margin-bottom:10px;
+}
+.ch-title em{font-style:italic;color:var(--gold);}
+.ch-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:15px;
+  color:var(--dim);margin-bottom:52px;
+}
+.ch-rule{width:36px;height:1px;background:var(--gold);margin-bottom:52px;opacity:.6;}
+
+/* Body text */
+.body-p{font-size:14px;line-height:1.95;color:var(--mid);}
+.body-p+.body-p{margin-top:16px;}
+strong{font-weight:500;color:var(--paper);}
+
+/* Grid helpers */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,28px);}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,2vw,20px);}
+
+/* ═══════════════════════════════════════
+   STAT CARDS
+═══════════════════════════════════════ */
+.stat-card{border-top:1px solid var(--line);padding-top:20px;}
+.stat-card.gold-top{border-top-color:var(--gold);}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,5vw,54px);font-weight:600;
+  color:var(--paper);line-height:1;
+}
+.stat-n.g{color:var(--gold);}
+.stat-u{font-size:.42em;font-weight:300;color:var(--dim);}
+.stat-l{font-size:11px;color:var(--dim);margin-top:8px;line-height:1.6;letter-spacing:.5px;}
+
+/* ═══════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════ */
+.tl{border-left:1px solid var(--line);padding-left:28px;margin-left:10px;}
+.tl-item{position:relative;padding-bottom:36px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{
+  content:'';position:absolute;left:-34px;top:6px;
+  width:8px;height:8px;border-radius:50%;
+  border:1px solid var(--gold);background:#080808;
+}
+.tl-yr{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-weight:600;color:var(--gold);
+  letter-spacing:2px;margin-bottom:5px;
+}
+.tl-t{font-size:14px;font-weight:500;color:var(--paper);margin-bottom:6px;}
+.tl-b{font-size:13px;color:var(--mid);line-height:1.8;}
+
+/* ═══════════════════════════════════════
+   FEATURE CARDS (glass)
+═══════════════════════════════════════ */
+.card{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  padding:28px 24px;
+  transition:border-color .3s,background .3s;
+}
+.card:hover{border-color:rgba(201,148,58,.3);background:rgba(201,148,58,.04);}
+.card-ico{font-size:26px;margin-bottom:14px;}
+.card-t{font-size:14px;font-weight:500;color:var(--paper);margin-bottom:8px;}
+.card-b{font-size:13px;color:var(--mid);line-height:1.8;}
+.card-accent{border-top:2px solid var(--gold);}
+
+/* ═══════════════════════════════════════
+   PRICE TABLE
+═══════════════════════════════════════ */
+.price-table{width:100%;border-collapse:collapse;}
+.price-table th{
+  padding:12px 16px;font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(201,148,58,.2);
+  text-align:left;font-weight:400;
+}
+.price-table td{
+  padding:14px 16px;font-size:13px;color:var(--mid);
+  border-bottom:1px solid var(--line);vertical-align:top;line-height:1.7;
+}
+.price-table td:first-child{font-weight:500;color:var(--paper);}
+.price-table tr:hover td{background:rgba(201,148,58,.04);}
+.price-hi{color:var(--gold)!important;font-weight:500!important;}
+
+/* ═══════════════════════════════════════
+   ABSD TABLE
+═══════════════════════════════════════ */
+.absd-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  border:1px solid var(--line);overflow:hidden;
+}
+.ag-cell{
+  padding:14px 16px;font-size:12px;color:var(--mid);
+  border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+  line-height:1.6;
+}
+.ag-cell:last-child{border-right:none;}
+.ag-head{
+  padding:12px 16px;font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);border-bottom:1px solid rgba(201,148,58,.3);border-right:1px solid var(--line);
+  background:rgba(201,148,58,.05);
+}
+.ag-head:last-child{border-right:none;}
+.ag-label{font-weight:500;color:var(--paper);}
+.ag-hi{color:var(--gold);font-weight:500;}
+.ag-warn{color:#e04c4c;font-weight:500;}
+
+/* ═══════════════════════════════════════
+   IMAGE WITH CAPTION
+═══════════════════════════════════════ */
+.img-wrap{position:relative;overflow:hidden;}
+.img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(.7);
+  transform:scale(1.04);transition:transform .8s ease;
+}
+.img-wrap:hover img{transform:scale(1);}
+.img-cap{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(8,8,8,.9) 0%,transparent 100%);
+  padding:20px 20px 16px;
+}
+.img-cap-label{font-size:9px;letter-spacing:3px;color:rgba(201,148,58,.7);text-transform:uppercase;margin-bottom:4px;}
+.img-cap-text{font-size:13px;color:var(--mid);}
+
+/* ═══════════════════════════════════════
+   PULL QUOTE
+═══════════════════════════════════════ */
+.pquote{
+  border-left:2px solid var(--gold);
+  padding:20px 28px;
+  background:rgba(201,148,58,.04);
+  margin:32px 0;
+}
+.pquote blockquote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(17px,2.2vw,23px);
+  font-style:italic;color:var(--paper);line-height:1.6;
+}
+.pquote cite{
+  display:block;font-size:11px;color:var(--dim);
+  margin-top:12px;letter-spacing:2px;text-transform:uppercase;
+  font-style:normal;
+}
+
+/* ═══════════════════════════════════════
+   BAR CHART (CSS only)
+═══════════════════════════════════════ */
+.bar-chart{display:flex;flex-direction:column;gap:12px;}
+.bar-row{display:flex;align-items:center;gap:14px;}
+.bar-label{font-size:12px;color:var(--mid);min-width:120px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;background:var(--gold);transition:width 1s cubic-bezier(.16,1,.3,1);}
+.bar-val{font-size:12px;color:var(--gold);font-weight:500;min-width:80px;text-align:right;}
+
+/* ═══════════════════════════════════════
+   DARK HIGHLIGHT BOX
+═══════════════════════════════════════ */
+.hl-box{
+  background:#080808;border:1px solid rgba(201,148,58,.15);
+  padding:clamp(24px,4vw,40px);
+}
+.hl-box-title{
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;
+}
+
+/* ═══════════════════════════════════════
+   LEARN ITEMS
+═══════════════════════════════════════ */
+.learn-item{
+  display:flex;gap:22px;
+  padding:22px 0;border-bottom:1px solid var(--line);
+}
+.learn-item:last-child{border-bottom:none;}
+.learn-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:600;
+  color:rgba(201,148,58,.2);line-height:1;flex-shrink:0;
+}
+.learn-t{font-size:14px;font-weight:500;color:var(--paper);margin-bottom:6px;}
+.learn-b{font-size:13px;color:var(--mid);line-height:1.8;}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+#footer{
+  padding:clamp(56px,8vh,80px) var(--pad-x) clamp(32px,5vh,48px);
+  background:#050505;border-top:1px solid var(--line);
+  position:relative;z-index:1;
+}
+.ft-in{
+  max-width:980px;margin:0 auto;
+  display:grid;grid-template-columns:1.5fr 1fr 1fr;
+  gap:clamp(32px,5vw,64px);margin-bottom:clamp(40px,6vh,56px);
+}
+.ft-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:300;letter-spacing:3px;
+  color:var(--paper);margin-bottom:12px;
+}
+.ft-logo b{color:var(--gold);font-weight:600;}
+.ft-desc{font-size:12px;color:var(--dim);line-height:1.9;max-width:220px;}
+.ft-col-t{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.ft-lnk{display:block;font-size:12px;color:var(--dim);padding:5px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:color .2s;}
+.ft-lnk:hover{color:var(--paper);}
+.ft-btm{
+  max-width:980px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;border-top:1px solid var(--line);
+  font-size:11px;color:rgba(232,228,220,.15);
+}
+
+/* ═══════════════════════════════════════
+   BACK TO TOP
+═══════════════════════════════════════ */
+#btt{
+  position:fixed;bottom:28px;left:28px;z-index:200;
+  width:40px;height:40px;border:1px solid var(--line);
+  background:rgba(8,8,8,.8);backdrop-filter:blur(12px);
+  color:var(--mid);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .3s,border-color .3s;
+}
+#btt.show{opacity:1;pointer-events:all;}
+#btt:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:900px){
+  #sidenav{display:none;}
+  .g2{grid-template-columns:1fr;}
+  .g3{grid-template-columns:1fr 1fr;}
+  .g4{grid-template-columns:1fr 1fr;}
+  .absd-grid{grid-template-columns:1fr 1fr;}
+  .ft-in{grid-template-columns:1fr 1fr;gap:32px;}
+}
+@media(max-width:640px){
+  #hmbg{display:block;}
+  h1.hero-title{font-size:clamp(42px,12vw,64px);}
+  .hero-stats{gap:20px;}
+  .g3,.g4{grid-template-columns:1fr;}
+  .absd-grid{grid-template-columns:1fr;overflow:auto;}
+  .ag-cell,.ag-head{border-right:none;}
+  .ft-in{grid-template-columns:1fr;}
+  .ft-btm{flex-direction:column;gap:8px;text-align:center;}
+  #btt{bottom:20px;left:20px;}
+  .price-table{font-size:12px;}
+  .price-table th,.price-table td{padding:10px 10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="logo">Singapore<b>Real Estate</b></div>
+  <button id="hmbg" onclick="toggleMob()">☰</button>
+</header>
+
+<!-- MOBILE MENU -->
+<div id="mobmenu">
+  <div class="mob-lnk" onclick="goSec('s1')">01 変遷と政策</div>
+  <div class="mob-lnk" onclick="goSec('s2')">02 産業戦略</div>
+  <div class="mob-lnk" onclick="goSec('s3')">03 住居と価格</div>
+  <div class="mob-lnk" onclick="goSec('s4')">04 文化と慣習</div>
+  <div class="mob-lnk" onclick="goSec('s5')">05 ローンと規制</div>
+  <div class="mob-lnk" onclick="goSec('s6')">06 まとめ</div>
+</div>
+
+<!-- SIDE NAV -->
+<nav id="sidenav">
+  <div class="sn-item active" data-sec="s0" onclick="goSec('s0')"><span class="sn-label">HERO</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s1" onclick="goSec('s1')"><span class="sn-label">変遷・政策</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s2" onclick="goSec('s2')"><span class="sn-label">産業戦略</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s3" onclick="goSec('s3')"><span class="sn-label">住居・価格</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s4" onclick="goSec('s4')"><span class="sn-label">文化・慣習</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s5" onclick="goSec('s5')"><span class="sn-label">ローン・規制</span><div class="sn-dot"></div></div>
+  <div class="sn-item" data-sec="s6" onclick="goSec('s6')"><span class="sn-label">まとめ</span><div class="sn-dot"></div></div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s0">
+  <div id="hero-bg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal in">Singapore Real Estate & Housing Guide</div>
+    <h1 class="hero-title reveal in d1">
+      <em>Land</em> is<br>Power.
+    </h1>
+    <p class="hero-sub reveal in d2">シンガポール不動産・住宅ガイド</p>
+    <div class="hero-stats reveal in d3">
+      <div class="hstat">
+        <div class="hstat-v">80<span style="font-size:.5em;font-weight:300;">%</span></div>
+        <div class="hstat-l">国民がHDB居住</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-v">S$62.8<span style="font-size:.4em;font-weight:300;">万</span></div>
+        <div class="hstat-l">HDB中央値（2025年）</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-v">60<span style="font-size:.5em;font-weight:300;">%</span></div>
+        <div class="hstat-l">外国人ABSD税率</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-v">90<span style="font-size:.5em;font-weight:300;">%</span></div>
+        <div class="hstat-l">HDB居住者の持家率</div>
+      </div>
+    </div>
+    <div class="hero-scroll reveal in d4">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S1: 変遷と政策 ═══ -->
+<section id="s1" class="sec-pad">
+  <div class="inner">
+    <div class="reveal"><div class="ch-label">Chapter 01</div></div>
+    <div class="reveal d1"><h2 class="ch-title">変遷と<em>政府の戦略</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">History & Government Policy — From Crisis to Icon</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <div class="g2">
+      <div>
+        <div class="pquote reveal">
+          <blockquote>「住宅を所有することは、国家の一員であることを意味する。人々に国への利害関係を持たせよ。」</blockquote>
+          <cite>— リー・クアンユー（初代首相）</cite>
+        </div>
+        <p class="body-p reveal">1960年、シンガポールの人口の<strong>わずか9%</strong>しか公営住宅に住んでいなかった。その他の多くは不衛生なスラム・密集住宅に居住。リー・クアンユー政権はHDB（住宅開発庁）を設立し、わずか3年で21,000戸、10年以内に54,000戸を建設。住宅危機を解決した。</p>
+        <p class="body-p reveal">現在、<strong>80%以上の国民がHDB住宅</strong>に暮らし、そのうち90%が自己所有（99年リース）。政府が土地の約90%を管理するシンガポールならではの「管理された市場」が生まれた。</p>
+      </div>
+
+      <div class="tl reveal-r">
+        <div class="tl-item">
+          <div class="tl-yr">1960</div>
+          <div class="tl-t">HDB設立・住宅危機への対応</div>
+          <div class="tl-b">住宅危機解決のためHDB（Housing and Development Board）設立。国民の9%のみが公営住宅居住という状況から大規模建設開始。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1964</div>
+          <div class="tl-t">Home Ownership Scheme（持家化政策）</div>
+          <div class="tl-b">HDB住宅を賃貸から持家に転換する政策を導入。国民が安価にHDB住宅を購入できる制度が始まる。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1968</div>
+          <div class="tl-t">CPF（中央積立基金）の住宅転用開始</div>
+          <div class="tl-b">強制貯蓄制度のCPFを住宅購入の頭金・月次返済に充当可能にした歴史的転換。現金なしで持家が実現し持家率が急上昇。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1980</div>
+          <div class="tl-t">国民の80%以上がHDB居住を達成</div>
+          <div class="tl-b">20年で世界最大規模の公営住宅プログラムを実現。スラム街は消滅し、住宅の「量」の問題は解決へ。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1989</div>
+          <div class="tl-t">Ethnic Integration Policy（民族統合政策）</div>
+          <div class="tl-b">各HDBブロック・団地に民族別の居住割合を設定。人種による居住分離を防ぎ多民族共生を住宅政策で実現。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">2011〜</div>
+          <div class="tl-t">冷却措置の段階的強化</div>
+          <div class="tl-b">ABSD（追加取得印紙税）の段階的引き上げにより、投機的購入と外国人投資を抑制。2023年には外国人の税率を30%→60%に引き上げ。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">2024</div>
+          <div class="tl-t">HDB分類制度の再編（Standard/Plus/Prime）</div>
+          <div class="tl-b">立地の良いHDB住宅に追加補助と同時に売却制限・利益還元義務を課す新分類制度を導入。投機防止と居住者優先を強化。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g4" style="margin-top:56px;">
+      <div class="stat-card reveal">
+        <div class="stat-n g">1M<span class="stat-u">+戸</span></div>
+        <div class="stat-l">HDB住宅総戸数<br>24の団地・3エステートに展開</div>
+      </div>
+      <div class="stat-card gold-top reveal d1">
+        <div class="stat-n">90<span class="stat-u">%</span></div>
+        <div class="stat-l">政府が管理する土地の割合<br>国家管理による安定供給の基盤</div>
+      </div>
+      <div class="stat-card reveal d2">
+        <div class="stat-n g">88<span class="stat-u">%</span></div>
+        <div class="stat-l">シンガポールの持家率<br>世界最高水準（日本:61%、米国:66%）</div>
+      </div>
+      <div class="stat-card reveal d3">
+        <div class="stat-n">20<span class="stat-u">%</span></div>
+        <div class="stat-l">国家予算に占める住宅関連支出<br>継続的な補助・整備への投資</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S2: 産業戦略 ═══ -->
+<section id="s2" class="sec-alt">
+  <div class="inner-w">
+    <div class="reveal"><div class="ch-label">Chapter 02</div></div>
+    <div class="reveal d1"><h2 class="ch-title">不動産を活用した<br><em>国家産業戦略</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">Real Estate as National Strategy — Marina Bay Sands & Beyond</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <div class="g2" style="margin-bottom:56px;">
+      <div>
+        <div class="img-wrap reveal-l" style="height:340px;">
+          <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&q=80" alt="Marina Bay Sands Singapore">
+          <div class="img-cap">
+            <div class="img-cap-label">Marina Bay Sands</div>
+            <div class="img-cap-text">観光・MICE・カジノ・不動産が融合する国家戦略の象徴</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,30px);font-weight:300;color:var(--paper);margin-bottom:20px;line-height:1.3;">マリーナベイサンズが示す<br>「不動産×産業融合」の哲学</h3>
+        <p class="body-p">2010年開業のマリーナベイサンズ（MBS）は、単なるホテルではない。<strong>総工費約80億S$</strong>をかけたシンガポール政府の国家的プロジェクトで、カジノ（IR）・高級ホテル（2,561室）・ショッピングモール・コンベンションセンター・スカイパーク（57階）をひとつの建築に統合した「経済装置」だ。</p>
+        <p class="body-p" style="margin-top:14px;">政府はIRライセンスをラスベガス・サンズとゲンティンの2社に付与し、外国資本を誘致しながら税収・雇用創出・観光収入を最大化。土地は99年リースで供給し、国家は土地の権利を維持しながら民間の経営能力を活用するというシンガポール流の「官民融合戦略」の典型例となっている。</p>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card card-accent reveal">
+        <div class="card-ico">🏙️</div>
+        <div class="card-t">Government Land Sales（GLS）プログラム</div>
+        <div class="card-b">政府が土地を民間デベロッパーに競売で供給する制度。供給量を半期ごとに調整することで市場価格をコントロール。需要が強い時期には供給を増やし、冷却措置と連携して市場の安定を図る。</div>
+      </div>
+      <div class="card card-accent reveal d1">
+        <div class="card-ico">🌊</div>
+        <div class="card-t">土地の埋め立てによる供給拡大</div>
+        <div class="card-b">建国以来、埋め立てにより国土面積を約25%拡大。マリーナベイ・ジュロン・チャンギ空港T5用地もその成果。限られた面積を物理的に拡張しながら戦略的立地を創出するシンガポール独自の発想。</div>
+      </div>
+      <div class="card card-accent reveal d2">
+        <div class="card-ico">🌆</div>
+        <div class="card-t">MRT直結の「駅前開発」戦略</div>
+        <div class="card-b">HDBタウン・商業施設・MRTを一体開発し、「車なしで生活できる都市」を実現。不動産価値とインフラが相互に強化し合う循環モデル。Jurong Lake District・Punggol等の次世代開発でも採用。</div>
+      </div>
+      <div class="card card-accent reveal d3">
+        <div class="card-ico">💰</div>
+        <div class="card-t">GIC・テマセクによる不動産投資</div>
+        <div class="card-b">政府系投資会社GICとテマセクは国際不動産への大規模投資を行い、国家資産を運用。国内の安定した不動産市場と海外投資収益の二重構造が、シンガポールの経済安全保障を支える。</div>
+      </div>
+      <div class="card card-accent reveal">
+        <div class="card-ico">✈️</div>
+        <div class="card-t">空港×不動産：Jewel Changi</div>
+        <div class="card-b">チャンギ空港に直結するJewelは、世界最大の室内滝・ショッピング・ホテルを融合。「空港を目的地にする」戦略は、観光・不動産・インフラを三位一体で価値向上させるモデルケース。</div>
+      </div>
+      <div class="card card-accent reveal d1">
+        <div class="card-ico">🏘️</div>
+        <div class="card-t">HDB団地をまちごと設計</div>
+        <div class="card-b">ホーカーセンター・学校・クリニック・緑地・MRTがひとつの団地に計画的に配置される「ニュータウン」モデル。不動産を単体ではなく「生活環境ごと」設計することで満足度と資産価値を共に高める。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S3: 住居と価格 ═══ -->
+<section id="s3" class="sec-pad">
+  <div class="inner">
+    <div class="reveal"><div class="ch-label">Chapter 03</div></div>
+    <div class="reveal d1"><h2 class="ch-title">住居の種類と<em>価格・エリア</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">Housing Types, Prices & Area Guide</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <!-- Housing type table -->
+    <div style="overflow-x:auto;" class="reveal">
+      <table class="price-table" style="width:100%;min-width:600px;">
+        <thead>
+          <tr>
+            <th>住居タイプ</th>
+            <th>対象</th>
+            <th>購入価格目安</th>
+            <th>月額賃料目安</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HDB 3-Room（2BR）</td>
+            <td style="color:var(--mid);">市民・PR対象</td>
+            <td class="price-hi">S$40〜70万</td>
+            <td>S$2,200〜3,200</td>
+          </tr>
+          <tr>
+            <td>HDB 4-Room（3BR）</td>
+            <td style="color:var(--mid);">市民・PR対象</td>
+            <td class="price-hi">S$55〜90万</td>
+            <td>S$3,000〜4,350</td>
+          </tr>
+          <tr>
+            <td>HDB 5-Room（4BR）</td>
+            <td style="color:var(--mid);">市民・PR対象</td>
+            <td class="price-hi">S$70〜120万</td>
+            <td>S$3,300〜4,350</td>
+          </tr>
+          <tr>
+            <td>コンドミニアム（CCR）</td>
+            <td style="color:var(--mid);">誰でも購入可</td>
+            <td class="price-hi">S$200〜400万+</td>
+            <td>S$5,000〜15,000</td>
+          </tr>
+          <tr>
+            <td>コンドミニアム（RCR）</td>
+            <td style="color:var(--mid);">誰でも購入可</td>
+            <td class="price-hi">S$150〜250万</td>
+            <td>S$4,000〜8,000</td>
+          </tr>
+          <tr>
+            <td>コンドミニアム（OCR）</td>
+            <td style="color:var(--mid);">誰でも購入可</td>
+            <td class="price-hi">S$100〜180万</td>
+            <td>S$3,000〜5,500</td>
+          </tr>
+          <tr>
+            <td>ランデッド（戸建て）</td>
+            <td style="color:var(--mid);">市民のみ原則</td>
+            <td class="price-hi">中央値S$465万</td>
+            <td>S$8,000〜30,000+</td>
+          </tr>
+          <tr>
+            <td>HDB公共賃貸（低所得者向け）</td>
+            <td style="color:var(--mid);">低所得市民</td>
+            <td style="color:var(--dim);">所有不可</td>
+            <td>S$26〜275（補助後）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:11px;color:var(--dim);margin-top:10px;margin-bottom:48px;" class="reveal">※2024〜2025年の実勢価格に基づく目安。CCR=Core Central Region、RCR=Rest of Central Region、OCR=Outside Central Region</p>
+
+    <!-- Area comparison -->
+    <div class="g2" style="margin-bottom:48px;">
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--paper);margin-bottom:24px;" class="reveal">エリアとコンドミニアム価格<br><span style="font-size:14px;color:var(--dim);font-weight:300;">（PSF = S$/平方フィート）</span></h3>
+        <div class="bar-chart reveal">
+          <div class="bar-row">
+            <div class="bar-label">CCR（中心部）</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%;" data-w="100"></div></div>
+            <div class="bar-val">S$2,215/psf</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">RCR（中心周辺）</div>
+            <div class="bar-track"><div class="bar-fill" style="width:86%;" data-w="86"></div></div>
+            <div class="bar-val">S$1,896/psf</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">OCR（郊外）</div>
+            <div class="bar-track"><div class="bar-fill" style="width:70%;" data-w="70"></div></div>
+            <div class="bar-val">S$1,545/psf</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">HDB中央値</div>
+            <div class="bar-track"><div class="bar-fill" style="width:28%;background:rgba(201,148,58,.4);" data-w="28"></div></div>
+            <div class="bar-val">S$628,000</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">ランデッド中央値</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%;background:rgba(232,228,220,.2);" data-w="100"></div></div>
+            <div class="bar-val">S$465万</div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--dim);margin-top:14px;" class="reveal">出典: URA、HDB 2025年実績データ</p>
+      </div>
+
+      <div>
+        <div class="img-wrap reveal-r" style="height:300px;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80" alt="Singapore HDB housing">
+          <div class="img-cap">
+            <div class="img-cap-label">HDB Public Housing</div>
+            <div class="img-cap-text">国民の80%が暮らす公共住宅。政府補助で高品質を維持</div>
+          </div>
+        </div>
+        <div class="hl-box reveal">
+          <div class="hl-box-title">HDB中古（Resale）の高騰</div>
+          <p style="font-size:13px;color:var(--mid);line-height:1.8;">100万S$超えのHDB中古物件（「ミリオンダラーHDB」）は2025年に急増。好立地の5-Room・Executive Flatが100万S$を超えるケースが続出し、「公共住宅の高級化」が社会的議論になっている。政府は2024年のPrime/Plus分類導入で長期保有義務・利益還元制度を設けて抑制を図っている。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Housing type features -->
+    <div class="g3">
+      <div class="card reveal">
+        <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;">公共住宅</div>
+        <div class="card-t">HDB（Housing & Development Board）</div>
+        <div class="card-b">市民・PRのみ購入可。CPFで返済可能。99年リース制。最低5年の居住義務（MOP）後に売却可。1セット（夫婦で1戸）の原則。外国人は購入不可。補助金により市場価格より安価に取得できるが、所得制限・婚姻状況等の条件あり。</div>
+      </div>
+      <div class="card reveal d1">
+        <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;">民間集合住宅</div>
+        <div class="card-t">コンドミニアム（私有）</div>
+        <div class="card-b">外国人も購入可能（ABSDあり）。プール・ジム・警備員等の施設完備。99年リースまたはフリーホールド（永久）。HDBより2〜4倍高額。駐在員・投資家に人気。エリアによってCCR/RCR/OCRに分類され価格が大きく異なる。</div>
+      </div>
+      <div class="card reveal d2">
+        <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;">戸建て住宅</div>
+        <div class="card-t">ランデッド（Landed Property）</div>
+        <div class="card-b">テラスハウス・セミデタッチ・バンガロー等。原則として<strong>シンガポール市民のみ</strong>購入可（PRは規制あり）。平均中央値S$465万と高額。限られた土地面積のため供給が極めて少なく、富裕層のステータスシンボルとしての性格が強い。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S4: 文化と慣習 ═══ -->
+<section id="s4" class="sec-dark">
+  <div class="inner">
+    <div class="reveal"><div class="ch-label">Chapter 04</div></div>
+    <div class="reveal d1"><h2 class="ch-title">住宅に関連する<br><em>シンガポールの文化</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">Housing Culture — Family, Community & National Identity</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <div class="g2" style="margin-bottom:52px;">
+      <div>
+        <p class="body-p reveal">シンガポールの住宅政策は、単に「住む場所を提供する」だけではない。家族の絆・民族の共存・コミュニティの形成・社会的流動性——これらすべてが住宅政策によって意図的に設計されている。</p>
+
+        <div style="margin-top:32px;" class="reveal">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--paper);margin-bottom:20px;">家族との近居を促す制度</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="border-left:2px solid var(--gold);padding-left:18px;">
+              <div style="font-size:13px;font-weight:500;color:var(--paper);margin-bottom:4px;">Proximity Housing Grant（近居補助金）</div>
+              <div style="font-size:13px;color:var(--mid);line-height:1.7;">親・子どもが近く（同一団地内または4km以内）に住む場合にS$10,000〜30,000の補助金を追加付与。政府が「近居文化」を金銭的に後押しする制度。</div>
+            </div>
+            <div style="border-left:2px solid rgba(201,148,58,.3);padding-left:18px;">
+              <div style="font-size:13px;font-weight:500;color:var(--paper);margin-bottom:4px;">Married Child Priority Scheme（MCPS）</div>
+              <div style="font-size:13px;color:var(--mid);line-height:1.7;">2002年導入。既婚の子どもとその親が同一エリアで住宅を購入する際、抽選の当選確率を高める優先制度。二世帯・近居を政策として促進。</div>
+            </div>
+            <div style="border-left:2px solid rgba(201,148,58,.3);padding-left:18px;">
+              <div style="font-size:13px;font-weight:500;color:var(--paper);margin-bottom:4px;">Multi-Generation Flat（多世代住宅）</div>
+              <div style="font-size:13px;color:var(--mid);line-height:1.7;">親世帯と子世帯が隣接する2ユニットを一体購入できるHDBの特別タイプ。家族の同居・近居を建築レベルから支援する設計。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="img-wrap reveal-r" style="height:240px;margin-bottom:20px;">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80" alt="Singapore HDB community">
+          <div class="img-cap">
+            <div class="img-cap-label">Community Design</div>
+            <div class="img-cap-text">ホーカーセンター・ボイドデッキが地域コミュニティを形成</div>
+          </div>
+        </div>
+        <div class="g2" style="gap:16px;">
+          <div class="stat-card reveal">
+            <div class="stat-n g">93<span class="stat-u">%</span></div>
+            <div class="stat-l">HDB居住者の住宅満足度（HDB調査）</div>
+          </div>
+          <div class="stat-card reveal d1">
+            <div class="stat-n">95<span class="stat-u">%</span></div>
+            <div class="stat-l">近隣環境への満足度</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card reveal">
+        <div class="card-ico">🏘️</div>
+        <div class="card-t">民族統合政策（EIP）の住宅版</div>
+        <div class="card-b">各HDBブロック・団地に中国系・マレー系・インド系の居住割合の上限を設定。人種による居住区の形成を防ぎ、多民族が日常的に交わるコミュニティを設計。シンガポール社会の安定装置として機能。</div>
+      </div>
+      <div class="card reveal d1">
+        <div class="card-ico">☕</div>
+        <div class="card-t">ボイドデッキ文化</div>
+        <div class="card-b">HDBの1階「ボイドデッキ」は駐輪場・共用スペース・コーヒーショップなどに使われる。葬儀・結婚式・地域行事の場としても使われ、住民が自然に交流する設計意図が組み込まれている。</div>
+      </div>
+      <div class="card reveal d2">
+        <div class="card-ico">📊</div>
+        <div class="card-t">HDB転売と資産形成文化</div>
+        <div class="card-b">最低5年（MOP）の居住後に売却し、利益を得て次のHDBまたはコンドへアップグレードする「HDB梯子」文化が定着。住宅が世代間の資産移転手段として機能しており、若者が親から資金援助を受けて購入するケースも多い。</div>
+      </div>
+    </div>
+
+    <div class="pquote reveal" style="margin-top:48px;">
+      <blockquote>住宅の所有は、シンガポール人が国家に持つ最大の「stake（利害関係）」だ。自分の家があるから、国を守りたいと思う。</blockquote>
+      <cite>— シンガポール住宅政策の根本哲学</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S5: ローンと規制 ═══ -->
+<section id="s5" class="sec-pad">
+  <div class="inner">
+    <div class="reveal"><div class="ch-label">Chapter 05</div></div>
+    <div class="reveal d1"><h2 class="ch-title">ローン体系と<br><em>政府の市場介入</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">Mortgage System & Government Cooling Measures</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <div class="g2" style="margin-bottom:48px;">
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--paper);margin-bottom:22px;" class="reveal">ローンの基本体系</h3>
+        <div style="display:flex;flex-direction:column;gap:16px;" class="reveal">
+          <div style="border:1px solid var(--line);padding:20px;">
+            <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">HDB Loan（公的ローン）</div>
+            <div style="font-size:13px;color:var(--mid);line-height:1.8;">金利: <strong style="color:var(--paper);">2.6%固定</strong>（CPF金利+0.1%）。LTV（融資比率）上限: <strong style="color:var(--paper);">75%</strong>（2024年8月改訂）。最長返済期間: 25年。月返済がCPFから自動引き落とし可。市民・PR対象。</div>
+          </div>
+          <div style="border:1px solid var(--line);padding:20px;">
+            <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">Bank Loan（民間銀行ローン）</div>
+            <div style="font-size:13px;color:var(--mid);line-height:1.8;">金利: 変動（SORA+スプレッド、概ね3〜4%台）。LTV上限: <strong style="color:var(--paper);">75%</strong>。最長30年（HDBは25年）。HDB・コンドいずれにも利用可。外国人も取得可。TDSR55%ルールが適用。</div>
+          </div>
+          <div style="border:1px solid var(--line);padding:20px;">
+            <div style="font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">CPF（中央積立基金）の活用</div>
+            <div style="font-size:13px;color:var(--mid);line-height:1.8;">給与の約37%（労使合計）が強制積立されるCPFを頭金・月次返済に充当可。「現金なし」での持家取得を可能にしたシンガポールの画期的な制度。ただし老後資金としての役割もあるため、過度な住宅充当には注意が必要。</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--paper);margin-bottom:22px;" class="reveal">2つの重要な規制指標</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;" class="reveal d1">
+          <div style="background:rgba(201,148,58,.06);border:1px solid rgba(201,148,58,.15);padding:20px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--gold);">55<span style="font-size:.5em;font-weight:300;">%</span></div>
+            <div style="font-size:13px;font-weight:500;color:var(--paper);margin:6px 0 4px;">TDSR（Total Debt Servicing Ratio）</div>
+            <div style="font-size:12px;color:var(--mid);line-height:1.7;">全借入の月返済合計が月収の55%を超えてはならない。住宅ローン・車ローン・カードローンすべてが対象。過剰借入を防ぐ歯止めとして機能。</div>
+          </div>
+          <div style="border:1px solid var(--line);padding:20px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--paper);">30<span style="font-size:.5em;font-weight:300;">%</span></div>
+            <div style="font-size:13px;font-weight:500;color:var(--paper);margin:6px 0 4px;">MSR（Mortgage Servicing Ratio）</div>
+            <div style="font-size:12px;color:var(--mid);line-height:1.7;">HDB住宅購入のみに適用。住宅ローン月返済が月収の30%以内に限定。TDSRより厳しく、庶民向け公共住宅の手頃さを守るための専用ルール。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABSD Table -->
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--paper);margin-bottom:22px;" class="reveal">ABSD（追加取得印紙税）レート 2023年改訂版</h3>
+    <div style="overflow-x:auto;" class="reveal">
+      <div class="absd-grid" style="min-width:520px;">
+        <div class="ag-head">購入者の区分</div>
+        <div class="ag-head">1軒目</div>
+        <div class="ag-head">2軒目</div>
+        <div class="ag-head">3軒目以降</div>
+
+        <div class="ag-cell ag-label">シンガポール市民（SC）</div>
+        <div class="ag-cell">0%</div>
+        <div class="ag-cell ag-hi">20%</div>
+        <div class="ag-cell ag-hi">30%</div>
+
+        <div class="ag-cell ag-label">永住権者（PR）</div>
+        <div class="ag-cell">5%</div>
+        <div class="ag-cell ag-hi">30%</div>
+        <div class="ag-cell ag-hi">35%</div>
+
+        <div class="ag-cell ag-label">外国人（Foreigner）</div>
+        <div class="ag-cell ag-warn">60%</div>
+        <div class="ag-cell ag-warn">60%</div>
+        <div class="ag-cell ag-warn">60%</div>
+
+        <div class="ag-cell ag-label">法人・信託</div>
+        <div class="ag-cell ag-warn">65%</div>
+        <div class="ag-cell ag-warn">65%</div>
+        <div class="ag-cell ag-warn">65%</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--dim);margin-top:10px;margin-bottom:40px;" class="reveal">2023年4月27日改訂。外国人の税率は2023年に30%→60%へ倍増。購入価格または市場価格のいずれか高い方に対して課税。</p>
+
+    <div class="g3">
+      <div class="card card-accent reveal">
+        <div class="card-ico">🛡️</div>
+        <div class="card-t">Sellers' Stamp Duty（SSD）短期売却規制</div>
+        <div class="card-b">2025年7月改訂。保有期間を4年に延長し、売却時に課税。1年以内売却:16%、2年以内:12%、3年以内:8%、4年以内:4%。短期転売（フリッピング）を抑止する制度。</div>
+      </div>
+      <div class="card card-accent reveal d1">
+        <div class="card-ico">⏳</div>
+        <div class="card-t">HDB最低居住義務（MOP: 5年）</div>
+        <div class="card-b">HDB新築（BTO）を購入した場合、最低5年間は居住義務。MOP中は売却・賃貸（全室）不可。Prime/Plus分類の物件は10年に延長。投機的購入を防ぐ最も基本的な規制。</div>
+      </div>
+      <div class="card card-accent reveal d2">
+        <div class="card-ico">🏦</div>
+        <div class="card-t">私有マンション後のHDB購入に15ヶ月待機</div>
+        <div class="card-b">民間マンション売却後にHDB中古（Resale）を購入するには15ヶ月の待機期間が義務付けられる。富裕層が補助付きHDBを購入して利益を得る行為を防ぐための制度。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S6: まとめ ═══ -->
+<section id="s6" class="sec-alt">
+  <div class="inner">
+    <div class="reveal"><div class="ch-label">Chapter 06</div></div>
+    <div class="reveal d1"><h2 class="ch-title">シンガポールの不動産から<br><em>学べること</em></h2></div>
+    <div class="reveal d2"><p class="ch-sub">Key Lessons — What the World Can Learn</p></div>
+    <div class="reveal d2"><div class="ch-rule"></div></div>
+
+    <div style="margin-bottom:48px;">
+      <div class="learn-item reveal">
+        <div class="learn-num">01</div>
+        <div>
+          <div class="learn-t">土地の管理権こそが最強の政策手段</div>
+          <div class="learn-b">国土の90%を国家が管理するシンガポールは、土地の供給量・用途・価格を直接コントロールできる。Government Land Salesプログラムで半期ごとに需要に応じた供給量を調整し、過熱時には絞り、不足時には増やす。土地の公共管理が住宅政策の根幹であることを体現している。</div>
+        </div>
+      </div>
+      <div class="learn-item reveal d1">
+        <div class="learn-num">02</div>
+        <div>
+          <div class="learn-t">「所有」を通じた国家への帰属意識の設計</div>
+          <div class="learn-b">「国民に家を持たせることで国家への利害を持たせる」というリー・クアンユーの思想は、88%という世界最高水準の持家率として結実した。住宅は単なる福祉ではなく、国家の安定と市民の国家帰属意識を同時に設計する政治的装置として機能している。</div>
+        </div>
+      </div>
+      <div class="learn-item reveal d2">
+        <div class="learn-num">03</div>
+        <div>
+          <div class="learn-t">インフラと不動産の一体開発で価値を創造</div>
+          <div class="learn-b">MRTの駅・ホーカーセンター・学校・公園をHDB団地と計画的に統合することで、「住宅単体」ではなく「生活環境ごと」の価値を創出する。Marina Bay Sands・Jewel Changi・Jurong Lake Districtに見られる「不動産×インフラ×産業」の融合モデルは、単なる開発を超えた国家ブランディングになっている。</div>
+        </div>
+      </div>
+      <div class="learn-item reveal">
+        <div class="learn-num">04</div>
+        <div>
+          <div class="learn-t">データ駆動の冷却措置で市場を「管理された過熱」に保つ</div>
+          <div class="learn-b">外国人ABSD60%・SSD保有期間4年・TDSR55%・MSR30%——シンガポールの冷却措置は単一の規制ではなく多層的な制度の組み合わせだ。価格が過熱すれば税率を上げ、不足すれば供給を増やす「データに基づく動的調整」は、市場を冷やしすぎず熱しすぎず保つ精密なコントロールを可能にしている。</div>
+        </div>
+      </div>
+      <div class="learn-item reveal d1">
+        <div class="learn-num">05</div>
+        <div>
+          <div class="learn-t">家族・コミュニティ・多民族共生を住宅で設計する</div>
+          <div class="learn-b">Proximity Housing Grant・MCPS・Ethnic Integration Policyは、住宅を「箱」ではなく「社会設計の道具」として使う発想だ。近居補助で家族の紐帯を強め、民族割当で分断を防ぎ、ボイドデッキで地域交流を生み出す——住宅政策が都市の社会設計そのものになっている点が、シンガポール最大の学びかもしれない。</div>
+        </div>
+      </div>
+      <div class="learn-item reveal d2">
+        <div class="learn-num">06</div>
+        <div>
+          <div class="learn-t">強制貯蓄（CPF）が住宅・老後・医療を一元的に支える</div>
+          <div class="learn-b">CPFという強制積立制度が住宅購入・老後年金・医療費を一体的にカバーする設計は、社会保障と住宅金融を統合した革新的なモデルだ。「現金なしで持家」を可能にしながら老後の備えも自動的に積み上がるこの制度は、政府が国民の人生設計を制度的に後押しする仕組みとして世界から注目されている。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pquote reveal">
+      <blockquote>小国には資源がない。土地も限られている。だからこそ、土地と人を最大限に活用する知恵が生まれた。</blockquote>
+      <cite>— シンガポール不動産政策の根底にある発想</cite>
+    </div>
+
+    <!-- Back-link to index -->
+    <div style="margin-top:56px;text-align:center;" class="reveal">
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);padding:14px 28px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mid);transition:border-color .3s,color .3s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)';" onmouseout="this.style.borderColor='var(--line)';this.style.color='var(--mid)';">
+        ← Singapore Life Guide Top
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="ft-in">
+    <div>
+      <div class="ft-logo">Singapore<b>Real Estate</b></div>
+      <p class="ft-desc">シンガポールの不動産・住宅事情を変遷・政策・価格・文化から深掘りするガイド。</p>
+    </div>
+    <div>
+      <div class="ft-col-t">Contents</div>
+      <div class="ft-lnk" onclick="goSec('s1')">01 — 変遷と政府の政策</div>
+      <div class="ft-lnk" onclick="goSec('s2')">02 — 不動産と産業戦略</div>
+      <div class="ft-lnk" onclick="goSec('s3')">03 — 住居の種類と価格</div>
+      <div class="ft-lnk" onclick="goSec('s4')">04 — 住宅文化と慣習</div>
+      <div class="ft-lnk" onclick="goSec('s5')">05 — ローンと政府規制</div>
+      <div class="ft-lnk" onclick="goSec('s6')">06 — 学べること</div>
+    </div>
+    <div>
+      <div class="ft-col-t">Data Sources</div>
+      <p class="ft-desc" style="max-width:100%;">HDB Annual Report 2024<br>URA Singapore Property Market 2025<br>MAS Cooling Measures 2023<br>IRAS ABSD Guidelines<br>SmartWealth.sg 2025<br>最終更新: 2025年</p>
+    </div>
+  </div>
+  <div class="ft-btm">
+    <span>© 2025 Singapore Life Guide — Real Estate</span>
+    <span>Images: Unsplash (CC0 License)</span>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ── Hero BG ── */
+window.addEventListener('load',()=>{
+  document.getElementById('hero-bg').classList.add('rdy');
+});
+
+/* ── Header scroll ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 600);
+});
+
+/* ── Mobile menu ── */
+function toggleMob(){
+  const m = document.getElementById('mobmenu');
+  const h = document.getElementById('hmbg');
+  const isOpen = m.classList.toggle('open');
+  h.textContent = isOpen ? '✕' : '☰';
+}
+function goSec(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.getElementById('mobmenu').classList.remove('open');
+  document.getElementById('hmbg').textContent = '☰';
+}
+
+/* ── Side nav active ── */
+const secIds = ['s0','s1','s2','s3','s4','s5','s6'];
+const snItems = document.querySelectorAll('.sn-item');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      snItems.forEach(item=>{
+        item.classList.toggle('active', item.dataset.sec === id);
+      });
+    }
+  });
+},{threshold:0.35});
+secIds.forEach(id=>{ const el=document.getElementById(id); if(el) io.observe(el); });
+
+/* ── Scroll reveal ── */
+const revEls = document.querySelectorAll('.reveal,.reveal-l,.reveal-r');
+const revObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.1});
+revEls.forEach(el=>{ if(!el.classList.contains('in')) revObs.observe(el); });
+</script>
+</body>
+</html>
